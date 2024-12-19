@@ -1,0 +1,11 @@
+# Exclude Python virtual environment
+.venv/
+.venv/*
+
+# Exclude Python bytecode files and cache
+__pycache__/
+*.py[cod]
+
+# Logs and temporary files
+*.log
+*.tmp
