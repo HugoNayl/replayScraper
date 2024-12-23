@@ -34,16 +34,16 @@ def get_match_details(match_id, api_key, region="europe"):
     
     participants = []
     for participant in info["participants"]:
-        champion = participant.get("championName")
+        champion = participant.get("championName").lower()
         role = participant.get("teamPosition", "NONE")
-        team_id = participant.get("teamId")
+        team_id = "blue" if participant.get("teamId") == 100 else "red"
         did_win = teams_win_map[team_id]
 
         participants.append({
             "champion": champion,
             "role": role,
-            "team": team_id,
-            "winner": did_win
+            "side": team_id,
+            "win": did_win
         })
     
     metadata = {
