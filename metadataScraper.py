@@ -45,8 +45,14 @@ def get_match_details(match_id, api_key, region="europe"):
             "team": team_id,
             "winner": did_win
         })
+    
+    metadata = {
+        "length": info["gameDuration"]*1000,
+        "participants": participants,
+        "patch": data["metadata"]["dataVersion"]
+    }
 
-    return participants
+    return metadata
 
 
 # Example usage:
