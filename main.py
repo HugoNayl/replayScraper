@@ -45,7 +45,8 @@ if __name__ == "__main__":
                 add_key(key_file, game_id, game_data["observers"]["encryptionKey"])
                 RC = ReplayCreator(game_data["gameId"], serv)
                 try:
-                    match_details = get_match_details(match_id=game_id, api_key=api_key, region=region)
+                    game_id_url = serv.upper()+"_"+game_id
+                    match_details = get_match_details(match_id=game_id_url, api_key=api_key, region=region)
                     
                     filename = f"{region}_{game_id}-metadata.json"
                     

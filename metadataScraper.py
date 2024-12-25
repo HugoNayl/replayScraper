@@ -1,4 +1,6 @@
 import requests
+import os
+import json
 
 def get_match_details(match_id, api_key, region="europe"):
     """
@@ -37,7 +39,19 @@ def get_match_details(match_id, api_key, region="europe"):
         champion = participant.get("championName").lower()
         role = participant.get("teamPosition", "NONE")
         team_id = "blue" if participant.get("teamId") == 100 else "red"
-        did_win = teams_win_map[team_id]
+        did_win = teams_win_map[participant.get("teamId")]
+        
+        match role:
+            case "TOP":
+                role = "top"
+            case "JUNGLE":
+                role = "jungle"
+            case "MIDDLE":
+                role = "mid"
+            case "BOTTOM":
+                role = "adc"
+            case "UTILITY":
+                role = "support"
 
         participants.append({
             "champion": champion,
@@ -58,14 +72,21 @@ def get_match_details(match_id, api_key, region="europe"):
 # Example usage:
 if __name__ == "__main__":
     # Replace with your match ID, e.g. "EUW1_1234567890"
-    match_id = "MATCH_ID"
+    file_list = os.listdir("replayfiles")
+    for file in file_list:
+        game_id = file.replace(".pkl", "")
+        print(game_id)
+        serv = "EUW1"
+        
+        game_id = serv+"_"+game_id
 
-    # Replace with your actual Riot API Key
-    api_key = "API_KEY"
+        api_key = os.getenv("RIOT_API_KEY")
 
-    try:
-        match_participants = get_match_details(match_id, api_key, region="europe")
-        for participant_info in match_participants:
-            print(participant_info)
-    except Exception as e:
-        print(f"Error: {e}")
+        try:
+            match_details = get_match_details(game_id, api_key, region="europe")
+            filename = f"{serv}_{game_id}-metadata.json"
+            
+            with open(filename, 'w') as metadata_file:
+                json.dump(match_details, metadata_file, indent=4)
+        except Exception as e:
+            print(f"Error: {e}")
