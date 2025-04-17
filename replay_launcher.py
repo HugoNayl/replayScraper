@@ -2,12 +2,12 @@ import server.requestHandler
 
 import subprocess
 import threading
+import os
 
 def launch_replay(gameId, key):
     # PowerShell script as a multi-line string
     powershell_script = '''
-    $gamePath = "C:\\Riot Games\\League of Legends\\Game"
-    $radsReleasesPath = "C:\\Riot Games\\League of Legends\\RADS\\solutions\\lol_game_client_sln\\releases"
+    $gamePath = "H:\\game\\Riot Games\\League of Legends\\Game"
 
     if (Test-Path $gamePath) {
         Set-Location $gamePath
@@ -22,7 +22,6 @@ def launch_replay(gameId, key):
 
     & ".\\League of Legends.exe" `
         "spectator 127.0.0.1:8000 ''' + key + ' ' + gameId + ''' EUW1" `
-        "-UseRads" `
         "-GameBaseDir=.."
     '''
     # Execute the PowerShell script
@@ -40,7 +39,7 @@ def launch_replay_n_serv(key, gameId):
     thread = threading.Thread(target = launch_replay, args=(gameId, key))
     thread.start()
     
-    server.requestHandler.run()
+    server.requestHandler.run(gameId=gameId)
 
 if __name__ == "__main__":
-    launch_replay_n_serv("sf1/Hv/6FHX42EgerviqhWNDdUd1EMP8", "7234213218")
+    launch_replay_n_serv("ISGyqhHQEhHP7tmnLQkvY2ARYnUEslZd", "7370557845")

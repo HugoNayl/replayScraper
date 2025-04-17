@@ -25,7 +25,7 @@ def add_key(file_path, gameId, key):
 #enter the game between 3 and 5 min to have full game
 if __name__ == "__main__":
     # set RIOT_API_KEY=API_KEY for Windows (PS: $env:RIOT_API_KEY = "API_KEY"/ export RIOT_API_KEY="API_KEY" on Unix based os
-    name = "Miyamotô Musashî#EUW"
+    name = "yukino cat#blue"
     api_key = os.getenv("RIOT_API_KEY")
     region = "europe"
     serv = 'euw1'

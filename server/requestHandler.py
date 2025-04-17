@@ -52,9 +52,8 @@ class RequestHandler(BaseHTTPRequestHandler):
             
 
 # Start the server
-def run(server_class=HTTPServer, handler_class=RequestHandler, port=8000):
+def run(server_class=HTTPServer, handler_class=RequestHandler, port=8000, gameId=None):
     try:
-        gameId = "7234213218"
         handler_class.game_id = gameId
         handler_class.chunk_info = ChunkInfo(gameId, "EUW1")
         server_address = ('', port)
